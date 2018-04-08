@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void createToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity
 
     public void createTabLayout() {
         // Create an instance of the tab layout from the view.
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout);
         // Set the text for each tab.
-        tabLayout.addTab(tabLayout.newTab().setText("Top Headlines"));
-        tabLayout.addTab(tabLayout.newTab().setText("Another"));
+        tabLayout.addTab(tabLayout.newTab().setText("Business"));
+        tabLayout.addTab(tabLayout.newTab().setText("Technology"));
         // Set the tabs to fill the entire layout.
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
     public void createViewPager() {
-        viewPager = (ViewPager) findViewById(R.id.viewPagerActivity);
+        viewPager =findViewById(R.id.viewPagerActivity);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -86,13 +86,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void createNavigationDrawer() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer =findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(android.support.v4.view.GravityCompat.START)) {
             drawer.closeDrawer(android.support.v4.view.GravityCompat.START);
         } else {

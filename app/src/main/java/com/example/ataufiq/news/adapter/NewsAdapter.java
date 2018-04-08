@@ -57,9 +57,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         holder.mTitleNews.setText(news.getTitle());
 
+        if (!news.getUrlToImage().equals("null")){
         Glide.with(context)
                 .load(news.getUrlToImage())
                 .into(holder.mImageNews);
+        }else {
+            holder.mImageNews.setImageResource(R.drawable.no_image);
+        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

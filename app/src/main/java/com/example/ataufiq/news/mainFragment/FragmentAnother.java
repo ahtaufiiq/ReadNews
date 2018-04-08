@@ -13,6 +13,8 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.ataufiq.news.MainContract;
+import com.example.ataufiq.news.MainPresenter;
 import com.example.ataufiq.news.R;
 import com.example.ataufiq.news.Constants;
 import com.example.ataufiq.news.adapter.NewsAdapter;
@@ -23,24 +25,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class FragmentAnother extends Fragment {
+public class FragmentAnother extends Fragment implements MainContract.View{
 
     private RecyclerView recyclerView;
     public RecyclerView.Adapter adapter;
     private ArrayList<News> listNews;
     ProgressBar progressBar;
+    private MainPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_another, container, false);
 
+        presenter = new MainPresenter(this);
+
         createRecylerView(view);
         setAdapter(view);
-        progressBar = view.findViewById(R.id.progressBar);
-        getNews();
+        showProgress();
 
+        presenter.getNews(Constants.ARTICLES_TOP_HEADLINES + "country=us"+"&category=technology");
         return view;
     }
 
@@ -52,50 +58,26 @@ public class FragmentAnother extends Fragment {
 
     private void setAdapter(View view){
         listNews = new ArrayList<>();
-
         adapter = new NewsAdapter(view.getContext(), listNews);
         recyclerView.setAdapter(adapter);
     }
 
-    public void getNews() {
-        AndroidNetworking.get(Constants.ARTICLE_EVERYTHING + "q=Apple")
-                .addHeaders("x-api-key", Constants.API_KEY)
-                .setTag("test")
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+    @Override
+    public void addData(List<News> newsList) {
+        for (News news:newsList){
+            listNews.add(news);
+            adapter.notifyDataSetChanged();
+            dismissProgress();
+        }
+    }
 
-                    @Override
-                    public void onResponse(JSONObject response) {
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
-                        JSONArray articles_arry;
-                        News listProduct;
-                        try {
-                            articles_arry = response.getJSONArray("articles");
-                            for (int i = 0; i < articles_arry.length(); i++) {
-                                JSONObject obj = articles_arry.getJSONObject(i);
-                                listProduct = new News(obj.getString(Constants.KEY_ARTICLE_AUTOR),
-                                        obj.getString(Constants.KEY_ARTICLE_TITLE),
-                                        obj.getString(Constants.KEY_ARTICLE_DESCRIPTION),
-                                        obj.getString(Constants.KEY_ARTICLE_URL),
-                                        obj.getString(Constants.KEY_ARTICLE_URLTOIMAGE),
-                                        obj.getString(Constants.KEY_ARTICLE_PUBLISHEDAT));
-                                listNews.add(listProduct);
-
-                            }
-                            adapter.notifyDataSetChanged();
-                            progressBar.setVisibility(View.GONE);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-
-                    }
-                });
+    @Override
+    public void dismissProgress() {
+        progressBar.setVisibility(View.GONE);
     }
 }
