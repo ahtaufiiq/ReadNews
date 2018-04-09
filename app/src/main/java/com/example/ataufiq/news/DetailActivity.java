@@ -1,14 +1,16 @@
 package com.example.ataufiq.news;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.webkit.WebView;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 
@@ -25,11 +27,34 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         getDataFromAdapter();
+        createToolbar();
+        createActionBar();
         setData();
 
         readFullArticle(url);
 
     }
+
+    public void createToolbar() {
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void createActionBar() {
+        //Action Bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("");
+
+        Window window = this.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+    }
+
 
     private void getDataFromAdapter() {
         //find Intent from Main Activity

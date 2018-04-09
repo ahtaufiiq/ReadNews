@@ -8,4 +8,5 @@
     <dimen name="app_bar_height">220dp</dimen>
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_16">16dp</dimen>
+    <dimen name="image_height">200dp</dimen>
 </resources>

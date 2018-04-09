@@ -3,4 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="text_title">Title</string>
+    <string name="text_deskripsi">Deskripsi</string>
+    <string name="button_read_full_article">Read Full Article</string>
 </resources>
