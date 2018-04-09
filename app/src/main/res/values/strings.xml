@@ -5,5 +5,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="text_title">Title</string>
     <string name="text_deskripsi">Deskripsi</string>
+    <string name="no_text_deskripsi">No Description</string>
     <string name="button_read_full_article">Read Full Article</string>
 </resources>

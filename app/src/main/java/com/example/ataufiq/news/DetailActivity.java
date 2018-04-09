@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void createToolbar() {
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,7 +47,9 @@ public class DetailActivity extends AppCompatActivity {
     public void createActionBar() {
         //Action Bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         actionBar.setTitle("");
 
         Window window = this.getWindow();
@@ -78,7 +81,7 @@ public class DetailActivity extends AppCompatActivity {
         if (!description.equals("null")) {
             mDescriptionNews.setText(description);
         } else {
-            mDescriptionNews.setText("No Description");
+            mDescriptionNews.setText(R.string.no_text_deskripsi);
         }
 
         //Set Image
@@ -103,5 +106,15 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
