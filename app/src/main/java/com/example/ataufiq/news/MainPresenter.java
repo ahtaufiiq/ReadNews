@@ -22,6 +22,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void getNews(String url) {
+        mView.showProgress();
         AndroidNetworking.get(url)
                 .addHeaders("x-api-key", Constants.API_KEY)
                 .setTag("test")
@@ -47,10 +48,10 @@ public class MainPresenter implements MainContract.Presenter {
                                 mView.addData(Collections.singletonList(listProduct));
 
                             }
+                            mView.dismissProgress();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                     }
 

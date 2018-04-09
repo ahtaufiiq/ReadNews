@@ -22,9 +22,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                return new FragmentTopHeadlines();
+                return new FragmentBusiness();
             case 1:
-                return new FragmentAnother();
+                return new FragmentTechnology();
             default:
                 return null;
         }

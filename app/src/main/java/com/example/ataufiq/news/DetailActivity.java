@@ -17,7 +17,7 @@ public class DetailActivity extends AppCompatActivity {
     String title, description, url, image;
     TextView mTitleNews, mDescriptionNews;
     ImageView mImageNews;
-
+    Button read;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class DetailActivity extends AppCompatActivity {
 
         getDataFromAdapter();
         setData();
+
         readFullArticle(url);
 
     }
@@ -38,13 +39,13 @@ public class DetailActivity extends AppCompatActivity {
         url = intent.getStringExtra(Constants.KEY_ARTICLE_URL);
         image = intent.getStringExtra(Constants.KEY_ARTICLE_URLTOIMAGE);
 
-        mTitleNews = findViewById(R.id.tv_title);
-        mDescriptionNews = findViewById(R.id.tv_deskripsi);
-        mImageNews = findViewById(R.id.img_news);
-
     }
 
     private void setData() {
+
+        mTitleNews = findViewById(R.id.tv_title);
+        mDescriptionNews = findViewById(R.id.tv_deskripsi);
+        mImageNews = findViewById(R.id.img_news);
         //Set Title
         mTitleNews.setText(title);
 
@@ -67,13 +68,13 @@ public class DetailActivity extends AppCompatActivity {
 
     private void readFullArticle(final String url) {
 
-        final Button button = findViewById(R.id.btn_read_all);
-        final WebView webView = findViewById(R.id.webView);
-        button.setOnClickListener(new View.OnClickListener() {
+        read = findViewById(R.id.btn_read_all);
+        read.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
+                Intent intent = new Intent(DetailActivity.this,WebViewActivity.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
 
             }
         });

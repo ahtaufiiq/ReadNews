@@ -1,8 +1,12 @@
 package com.example.ataufiq.news.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,7 +56,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(NewsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final NewsAdapter.ViewHolder holder, int position) {
         final News news = listNews.get(position);
 
         holder.mTitleNews.setText(news.getTitle());
@@ -69,11 +73,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailActivity.class);
+
+                Pair<View, String> pair1= Pair.create(holder.itemView.findViewById(R.id.img_news),"image");
+                Pair<View, String> pair2= Pair.create(holder.itemView.findViewById(R.id.img_news),"title");
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,pair1,pair2);
+
                 intent.putExtra(Constants.KEY_ARTICLE_TITLE, news.getTitle());
                 intent.putExtra(Constants.KEY_ARTICLE_DESCRIPTION, news.getDescription());
                 intent.putExtra(Constants.KEY_ARTICLE_URL, news.getUrl());
                 intent.putExtra(Constants.KEY_ARTICLE_URLTOIMAGE, news.getUrlToImage());
-                context.startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    context.startActivity(intent,optionsCompat.toBundle());
+                }else {
+                    context.startActivity(intent);
+                }
             }
         });
 
